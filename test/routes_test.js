@@ -44,7 +44,7 @@ describe('quotes API', function() {
 					.send({source: 'my Brain', quoteBody: 'Tubthumping'})
 					.end(function(err, res) {
  						expect(res.status).to.equal(400);
- 						expect(res.error.text).to.equal('{"msg":"invalid input for writer"}')
+ 						expect(res.error.text).to.equal('{"msg":"invalid input for writer"}');
 						done();
 					});
 			});
@@ -54,7 +54,7 @@ describe('quotes API', function() {
 					.send({writer: 'Jonathan', source: 'my Brain'})
 					.end(function(err, res) {
  						expect(res.status).to.equal(400);
- 						expect(res.error.text).to.equal('{"msg":"invalid input for quoteBody"}')
+ 						expect(res.error.text).to.equal('{"msg":"invalid input for quoteBody"}');
 						done();
 					});
 			});

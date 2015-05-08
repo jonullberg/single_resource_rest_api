@@ -29,7 +29,7 @@ module.exports = function(router) {
 			if(err){
 				var inputTitle = Object.keys(err.errors)[0];
 				var errPath = err.errors[inputTitle];
-				var errMsg = {msg: 'invalid input for ' + errPath.path}
+				var errMsg = {msg: 'invalid input for ' + errPath.path};
 				if(errPath.kind === 'required') {
 					var fourHundred = function(err, res) {
 						console.log(err.errors[inputTitle].message);
