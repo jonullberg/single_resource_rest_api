@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 
 var quoteRoutes = express.Router();
 
-require('./routes/quotes_routes')(quoteRoutes);
+require('./router/quotes_routes')(quoteRoutes);
 
 app.use('/api', quoteRoutes);
 
