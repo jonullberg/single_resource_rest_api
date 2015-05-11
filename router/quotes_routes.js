@@ -47,7 +47,6 @@ module.exports = function(router) {
 	router.put('/quotes/:id', function(req, res) {
 		var updatedQuote = req.body;
 		delete updatedQuote._id;
-		console.log(req);
 
 		Quote.update({_id: req.params.id}, updatedQuote, function(err) {
 			if(err) {
