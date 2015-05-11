@@ -29,10 +29,10 @@ describe('quotes API', function() {
 		it('should be able to write a quote', function(done) {
 			chai.request('localhost:3000')
 				.post('/api/quotes')
-				.send({writer: 'Jonathan', source: 'my brain', quoteBody: 'YOLO'})
+				.send({writer: 'Michael Scott', source: 'The Office', quoteBody: 'Thats what she said'})
 				.end(function(err, res) {
 					expect(err).to.equal(null);
-					expect(res.body.source).to.equal('my brain');
+					expect(res.body.source).to.equal('The Office');
 					expect(res.body).to.have.a.property('_id');
 					done();
 				});
