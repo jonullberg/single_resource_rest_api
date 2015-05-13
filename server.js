@@ -1,6 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 
@@ -12,7 +12,7 @@ require('./router/quotes_routes')(quoteRoutes);
 
 app.use('/api', quoteRoutes);
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/development');
+// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/development');
 
 app.listen(port, function() {
 	console.log('Your server is running on port ' + port);

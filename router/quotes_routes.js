@@ -3,7 +3,7 @@
 var Quote = require('../model/Quote');	// pulls in the Quote schema
 var bodyparser = require('body-parser'); // requires in the bodyparser module
 var Sql = require('sequelize');
-var sql = new Sql('notes_dev', 'notes_dev', 'foobar123', {
+var sql = new Sql(process.env.PG_DATABASE, process.env.PG_USER, process.env.PG_PASS, {
 	dialect: 'postgres'
 });
 
