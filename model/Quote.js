@@ -1,11 +1,14 @@
 'use strict';
 
-var mongoose = require('mongoose');
-
-var quoteSchema = mongoose.Schema({
-	writer: {type: String, required: true},
-	source: String,
-	quoteBody: {type: String, required: true}
+var Sql = require('sequelize');
+var sql = new Sql(process.env.PG_DATABASE, process.env.PG_USER, process.env.PG_PASS, {
+	dialect: 'postgres'
 });
 
-module.exports = mongoose.model('Quote', quoteSchema);
+var Quote = module.exports = sql.define('Quote', {
+	writer: Sql.STRING,
+	source: Sql.STRING,
+	quoteBody: Sql.STRING
+});
+
+Quote.sync();
