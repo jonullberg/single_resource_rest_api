@@ -2,18 +2,29 @@
 
 var mongoose = require('mongoose');
 var express = require('express');
+var passport = require('passport');
 var app = express();
 
 var port = process.env.PORT || 3000;
 
-var quoteRoutes = express.Router();
+process.env.APP_SECRET = process.env.APP_SECRET || 'changethischangethischangethis!';
 
-require('./router/quotes_routes')(quoteRoutes);
+var notesRoutes = express.Router();
+var usersRoutes = express.Router();
 
-app.use('/api', quoteRoutes);
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/notes_dev');
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/development');
+
+app.use(passport.initialize());
+
+require('./lib/passport_strat')(passport);
+
+require('./router/notes_routes')(notesRoutes);
+require('./router/auth_routes')(usersRoutes, passport);
+
+app.use('/api', notesRoutes);
+app.use('/api', usersRoutes);
 
 app.listen(port, function() {
 	console.log('Your server is running on port ' + port);
-});
+});	
