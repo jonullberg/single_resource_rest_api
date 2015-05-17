@@ -1,7 +1,7 @@
 {
   "name": "single_rest_api",
   "version": "0.1.0",
-  "description": "a single resource REST api using mongoDB that saves quotes",
+  "description": "a single resource REST api using mongoDB that saves quotes and has authentication",
   "main": "server.js",
   "scripts": {
     "test": "\"./node_modules/mocha/bin/mocha **/*test.js\""
