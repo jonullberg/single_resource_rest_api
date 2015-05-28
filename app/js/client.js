@@ -1,7 +1,7 @@
 'use strict';
 
-var intro = require('./introduction');
-var notesGet = require('./notes_get');
+require('angular/angular');
 
-document.write(intro());
-document.write(notesGet());
+var notesApp = angular.module('notesApp', []);
+
+require('./notes/controllers/notes_controller')(notesApp);
