@@ -4,6 +4,7 @@ module.exports = function(app) {
 	app.controller('notesController', ['$scope', '$http', function($scope, $http) {
 		$scope.errors = [];
 		$scope.notes = [];
+		// $scope.note.noteBodyInitial = $scope.note.noteBody;
 
 		$scope.getAll = function() {
 			$http.get('/api/notes')
@@ -18,7 +19,7 @@ module.exports = function(app) {
 
 		$scope.createNewNote = function() {
 			$scope.notes.push($scope.newNote);
-			$http.post('/api/notesasdfar', $scope.newNote)
+			$http.post('/api/notes', $scope.newNote)
 				.success(function(data) {
 					// $scope.notes.push(data);
 					$scope.newNote = null;
@@ -38,15 +39,33 @@ module.exports = function(app) {
 				});
 		};
 
+		function initValue() {
+			$scope.copy = angular.copy($scope.note);
+		};
+
+		function setValue() {
+			$scope.note = $scope.copy;
+		};
+
+		$scope.edit = function(note) {
+			note.editing = true;
+			initValue();
+		};
+
 		$scope.saveNote = function(note) {
 			note.editing = false;
-			$scope.initial = note.noteBody;
 
 			$http.put('/api/notes/' + note._id, note)
 				.error(function(data) {
 					console.log(data);
 					$scope.errors.push({ msg: 'Could not update note' });
 				});
+			setValue();
+		};
+
+		$scope.resetNote = function() {
+			note.editing = false;
+			initValue();
 		};
 
 		$scope.clearErrors = function() {
