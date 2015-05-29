@@ -22,11 +22,11 @@
 		<ul data-ng-repeat="note in notes">
 			<li>{{note.noteBody}}
 				<button data-ng-click="removeNote(note)">Delete</button>
-				<button data-ng-if="!note.editing" data-ng-click="edit(note)">Edit</button>
+				<button data-ng-if="!note.editing" data-ng-click="storeValue(note)">Edit</button>
 				<form name="{{'editing' + note._id}}" data-ng-if="note.editing" data-ng-submit="saveNote(note)">
 					<input type="text" data-ng-model="note.noteBody">
 					<button type="submit">Save Changes</button>
-					<button data-ng-click="reset()">Cancel</button>
+					<button type="button" data-ng-click="cancelEdit(note)">Cancel</button>
 				</form>
 			</li>
 		</ul>
