@@ -47,10 +47,10 @@ module.exports = function(app) {
 			$scope.note = $scope.copy;
 		};
 
-		$scope.edit = function(note) {
-			note.editing = true;
-			initValue();
-		};
+		// $scope.edit = function(note) {
+		// 	note.editing = true;
+		// 	initValue();
+		// };
 
 		$scope.saveNote = function(note) {
 			note.editing = false;
@@ -60,12 +60,10 @@ module.exports = function(app) {
 					console.log(data);
 					$scope.errors.push({ msg: 'Could not update note' });
 				});
-			setValue();
 		};
 
 		$scope.resetNote = function() {
 			note.editing = false;
-			initValue();
 		};
 
 		$scope.clearErrors = function() {
