@@ -6,11 +6,13 @@ var app = express();
 
 var port = process.env.PORT || 3000;
 
-var quoteRoutes = express.Router();
+var noteRoutes = express.Router();
 
-require('./router/quotes_routes')(quoteRoutes);
+app.use(express.static(__dirname + '/build'));
 
-app.use('/api', quoteRoutes);
+require('./router/notes_routes')(noteRoutes);
+
+app.use('/api', noteRoutes);
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/development');
 
