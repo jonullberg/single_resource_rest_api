@@ -18,10 +18,10 @@ module.exports = function(app) {
 		};
 
 		$scope.createNewNote = function() {
-			$scope.notes.push($scope.newNote);
+			// $scope.notes.push($scope.newNote);
 			$http.post('/api/notes', $scope.newNote)
 				.success(function(data) {
-					// $scope.notes.push(data);
+					$scope.notes.push(data);
 					$scope.newNote = null;
 				})
 				.error(function(data) {
