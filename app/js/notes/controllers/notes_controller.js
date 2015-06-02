@@ -39,18 +39,6 @@ module.exports = function(app) {
 				});
 		};
 
-		function initValue() {
-			$scope.copy = angular.copy($scope.note);
-		};
-
-		function setValue() {
-			$scope.note = $scope.copy;
-		};
-
-		// $scope.edit = function(note) {
-		// 	note.editing = true;
-		// 	initValue();
-		// };
 
 		$scope.saveNote = function(note) {
 			note.editing = false;
@@ -60,10 +48,6 @@ module.exports = function(app) {
 					console.log(data);
 					$scope.errors.push({ msg: 'Could not update note' });
 				});
-		};
-
-		$scope.resetNote = function() {
-			note.editing = false;
 		};
 
 		$scope.clearErrors = function() {

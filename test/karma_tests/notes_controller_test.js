@@ -51,13 +51,46 @@ describe('Notes controller', function() {
 		});
 
 		it('Should be able to save a new note', function() {
-			$scope.newNote = {_id: '2', noteBody: 'A second test note'};
-			$httpBackend.expectPOST('/api/notes').respond(200, $scope.newNote);
+			$scope.newNote = {noteBody: 'A second test note'};
+			$httpBackend.expectPOST('/api/notes').respond(200, {_id: '2', noteBody: 'A second test note'});
 			$scope.createNewNote();
 			$httpBackend.flush();
 			expect($scope.notes[0].noteBody).toBe('A second test note');
-			expect($scope.notes[0]._id).toBe('2');
 			expect($scope.newNote).toBe(null);
+		});
+
+		it('Should be able to delete a note', function() {
+			var note = {_id: '3', noteBody: 'A third test note'};
+			$scope.notes.push(note);
+			$httpBackend.expectDELETE('/api/notes/3').respond(200, {msg: 'success'});
+			expect($scope.notes.indexOf(note)).not.toBe(-1);
+			$scope.removeNote(note);
+			expect($scope.notes.indexOf(note)).toBe(-1);
+			$httpBackend.flush();
+			expect($scope.errors.length).toBe(0);
+		});
+
+		it('Should be able to delete a note even on server errors', function() {
+			var note = {_id: '4', noteBody: 'A fourth test note'};
+			$scope.notes.push(note);
+			$httpBackend.expectDELETE('/api/notes/4').respond(500, {msg: 'Internal Server Error'});
+			expect($scope.notes.indexOf(note)).not.toBe(-1);
+			$scope.removeNote(note);
+			expect($scope.notes.indexOf(note)).toBe(-1);
+			$httpBackend.flush();
+			expect($scope.errors.length).toBe(1);
+			expect($scope.errors[0].msg).toBe('Could not remove note A fourth test note')
+
+		});
+
+		it('Should be able to update a note', function() {
+			var note = {_id: '5', noteBody: 'A fifth test note, edited'};
+			$scope.notes.push(note);
+			$httpBackend.expectPUT('/api/notes/5').respond(200, {msg: 'Success!'});
+			$scope.saveNote(note);
+			expect($scope.notes[0].noteBody).toBe('A fifth test note, edited');
+			$httpBackend.flush();
+			expect($scope.errors.length).toBe(0);
 		});
 	});
 });
