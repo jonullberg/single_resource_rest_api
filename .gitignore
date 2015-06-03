@@ -3,3 +3,4 @@
 .env
 Procfile
 **/build/
+**/bundle.js

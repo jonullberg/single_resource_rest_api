@@ -18,10 +18,10 @@ module.exports = function(app) {
 		};
 
 		$scope.createNewNote = function() {
-			$scope.notes.push($scope.newNote);
+			// $scope.notes.push($scope.newNote);
 			$http.post('/api/notes', $scope.newNote)
 				.success(function(data) {
-					// $scope.notes.push(data);
+					$scope.notes.push(data);
 					$scope.newNote = null;
 				})
 				.error(function(data) {
@@ -39,10 +39,6 @@ module.exports = function(app) {
 				});
 		};
 
-		$scope.storeValue = function(note) {
-			note.editing = true;
-			$scope.master = angular.copy(note);
-		};
 
 		$scope.saveNote = function(note) {
 			note.editing = false;
@@ -51,11 +47,6 @@ module.exports = function(app) {
 					console.log(data);
 					$scope.errors.push({ msg: 'Could not update note' });
 				});
-		};
-
-		$scope.cancelEdit = function(note) {
-			$scope.master.editing = false;
-			$scope.notes.splice($scope.notes.indexOf(note), 1, $scope.master);
 		};
 
 		$scope.clearErrors = function() {
