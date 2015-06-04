@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	grunt.initConfig({
 		webpack: {
@@ -54,25 +55,55 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			gruntfile: {
-				src: ['Gruntfile.js']
+			jasmine: {
+				src: ['test/karma_tests/*test.js'],
+				options: {
+					globals: {
+						angular: true,
+						describe: true,
+						it: true, 
+						before: true,
+						beforeEach: true,
+						after: true,
+						afterEach: true,
+						expect: true
+					}
+				}
 			},
-			all: {
-				src: ['Gruntfile.js', 'router/**/*.js', 'test/**/*.js', 'server.js', 'model/**/*.js']
+			mocha: {
+				src: ['test/server/*test.js'],
+				options: {
+					globals: {
+						describe: true,
+						it: true,
+						before: true,
+						beforeEach: true,
+						after: true,
+						afterEach: true
+					}
+				}
+			},
+			server: {
+				src: ['Gruntfile.js', 'server.js', 'models/*.js', 'routes/*.js']
+			},
+			client: {
+				src: ['app/**/*.js'],
+				options: {
+					globals: {
+						angular: true
+					}
+				}
 			},
 			options: {
-				jshintrc: '.jshintrc'
+				node: true
 			}
 		}
 	});
 
-	grunt.registerTask('build:test', ['webpack:test', 'copy:html']);
-	grunt.registerTask('build:karma', ['webpack:karma']);
 	grunt.registerTask('build:dev', ['webpack:client', 'copy:html']);
 	grunt.registerTask('build', ['build:dev']);
-	grunt.registerTask('hint', ['jshint:all']);
-	grunt.registerTask('test', ['hint']);
 	grunt.registerTask('karmatest', ['webpack:karma', 'karma:test']);
-	grunt.registerTask('default', ['jshint:all', 'build']);
+	grunt.registerTask('jshint:all', ['jshint:jasmine', 'jshint:mocha', 'jshint:server', 'jshint:client']);
+	grunt.registerTask('default', ['build', 'jshint:all']);
 
 };

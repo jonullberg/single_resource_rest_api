@@ -1,52 +1,41 @@
 'use strict';
 
 module.exports = function(app) {
-	app.controller('notesController', ['$scope', '$http', function($scope, $http) {
+	app.controller('notesController', ['$scope', 'RESTResource', 'copy', function($scope, resource, copy) {
+		var Note = resource('notes');
 		$scope.errors = [];
 		$scope.notes = [];
-		$scope.master = null;
 
 		$scope.getAll = function() {
-			$http.get('/api/notes')
-				.success(function(data) {
-					$scope.notes = data;
-				})
-				.error(function(data) {
-					console.log(data);
-					$scope.errors.push({ msg: 'Error retrieving notes' });
-				});
+			Note.getAll(function(err, data) {
+				if(err) return $scope.errors.push({ msg: 'There was an error retrieving your notes' });
+				$scope.notes = data;
+			});
 		};
 
-		$scope.createNewNote = function() {
-			// $scope.notes.push($scope.newNote);
-			$http.post('/api/notes', $scope.newNote)
-				.success(function(data) {
-					$scope.notes.push(data);
-					$scope.newNote = null;
-				})
-				.error(function(data) {
-					console.log(data);
-					$scope.errors.push({ msg: 'Failed to create a new note' });
-				});
+		$scope.createNewNote = function(note) {
+			var newNote = copy(note);
+			note.noteBody = '';
+			$scope.notes.push(newNote);
+			Note.create(newNote, function(err, data) {
+				if(err) return $scope.errors.push({ msg: 'There was an error creating your note' });
+				$scope.notes.splice($scope.notes.indexOf(newNote), 1, data);
+			});
 		};
 
 		$scope.removeNote = function(note) {
 			$scope.notes.splice($scope.notes.indexOf(note), 1);
-			$http.delete('/api/notes/' + note._id)
-				.error(function(data) {
-					console.log(data);
-					$scope.errors.push({ msg: 'Could not remove note ' + note.noteBody });
-				});
+			Note.remove(note, function(err) {
+				if(err) return $scope.errors.push({ msg: 'There was an error deleting your note' });
+			});
 		};
 
 
 		$scope.saveNote = function(note) {
 			note.editing = false;
-			$http.put('/api/notes/' + note._id, note)
-				.error(function(data) {
-					console.log(data);
-					$scope.errors.push({ msg: 'Could not update note' });
-				});
+			Note.save(note, function(err, data) {
+				if(err) return $scope.errors.push({ msg: 'There was an error while updating your note' });
+			});
 		};
 
 		$scope.clearErrors = function() {
