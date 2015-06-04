@@ -79,7 +79,7 @@ describe('Notes controller', function() {
 			expect($scope.notes.indexOf(note)).toBe(-1);
 			$httpBackend.flush();
 			expect($scope.errors.length).toBe(1);
-			expect($scope.errors[0].msg).toBe('Could not remove note A fourth test note')
+			expect($scope.errors[0].msg).toBe('Could not remove note A fourth test note');
 
 		});
 
