@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = function(grunt) {
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-karma');
 
 	grunt.initConfig({
 		webpack: {
@@ -30,6 +30,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+
+		karma: {
+			test: {
+				configFile: './karma.conf.js'
+			}
+		},
+
 		copy: {
 			html: {
 				cwd: 'app/',
@@ -40,6 +47,7 @@ module.exports = function(grunt) {
 				filter: 'isFile'
 			}
 		},
+
 		clean: {
 			dev: {
 				src: 'build/'
@@ -64,6 +72,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', ['build:dev']);
 	grunt.registerTask('hint', ['jshint:all']);
 	grunt.registerTask('test', ['hint']);
+	grunt.registerTask('karmatest', ['webpack:karma', 'karma:test']);
 	grunt.registerTask('default', ['jshint:all', 'build']);
 
 };
