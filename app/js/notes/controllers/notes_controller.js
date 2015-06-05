@@ -15,8 +15,6 @@ module.exports = function(app) {
 
 		$scope.createNewNote = function(note) {
 			var newNote = copy(note);
-			console.log(note);
-			console.log(newNote);
 			note.noteBody = '';
 			$scope.notes.push(newNote);
 			Note.create(newNote, function(err, data) {
