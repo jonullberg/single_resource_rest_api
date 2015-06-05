@@ -27,7 +27,7 @@ notesApp.config(['$routeProvider', function($routeProvider) {
 			controller: 'notesController'
 		})
 		.when('/sign_in', {
-			teplateUrl: 'templates/views/sign_in.html',
+			templateUrl: 'templates/views/sign_in.html',
 			controller: 'authController'
 		})
 		.when('/create_user', {
