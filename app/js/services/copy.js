@@ -7,6 +7,7 @@ module.exports = function(app) {
 			Object.keys(objToCopy).forEach(function(key) {
 				obj[key] = objToCopy[key];
 			});
+			return obj;
 		};
 	});
 };

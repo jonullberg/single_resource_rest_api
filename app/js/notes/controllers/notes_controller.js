@@ -15,6 +15,8 @@ module.exports = function(app) {
 
 		$scope.createNewNote = function(note) {
 			var newNote = copy(note);
+			console.log(note);
+			console.log(newNote);
 			note.noteBody = '';
 			$scope.notes.push(newNote);
 			Note.create(newNote, function(err, data) {
@@ -36,6 +38,17 @@ module.exports = function(app) {
 			Note.save(note, function(err, data) {
 				if(err) return $scope.errors.push({ msg: 'There was an error while updating your note' });
 			});
+		};
+
+		$scope.toggleEdit = function(note) {
+			if(note.editing) {
+				note.noteBody = note.noteBodyBackup;
+				note.noteBodyBackup = undefined;
+				note.editing = false;
+			} else {
+				note.noteBodyBackup = note.noteBody;
+				note.editing = true;
+			}
 		};
 
 		$scope.clearErrors = function() {
