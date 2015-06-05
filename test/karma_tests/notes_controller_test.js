@@ -47,16 +47,16 @@ describe('Notes controller', function() {
 			$scope.getAll();
 			$httpBackend.flush();
 			expect($scope.errors.length).toBe(1);
-			expect($scope.errors[0].msg).toBe('Error retrieving notes');
+			expect($scope.errors[0].msg).toBe('There was an error retrieving your notes');
 		});
 
 		it('Should be able to save a new note', function() {
 			$scope.newNote = {noteBody: 'A second test note'};
 			$httpBackend.expectPOST('/api/notes').respond(200, {_id: '2', noteBody: 'A second test note'});
-			$scope.createNewNote();
+			$scope.createNewNote($scope.newNote);
 			$httpBackend.flush();
 			expect($scope.notes[0].noteBody).toBe('A second test note');
-			expect($scope.newNote).toBe(null);
+			expect($scope.newNote.noteBody).toBe('');
 		});
 
 		it('Should be able to delete a note', function() {
@@ -79,7 +79,7 @@ describe('Notes controller', function() {
 			expect($scope.notes.indexOf(note)).toBe(-1);
 			$httpBackend.flush();
 			expect($scope.errors.length).toBe(1);
-			expect($scope.errors[0].msg).toBe('Could not remove note A fourth test note');
+			expect($scope.errors[0].msg).toBe('There was an error deleting your note');
 
 		});
 
