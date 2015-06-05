@@ -15,14 +15,15 @@
 	<ul data-ng-repeat="note in notes">
 		<li>{{note.noteBody}}
 			<button data-ng-click="removeNote(note)">Delete</button>
-			<button data-ng-if="!note.editing" data-ng-click="note.editing = true">Edit</button>
+			<button data-ng-if="!note.editing" data-ng-click="toggleEdit(note)">Edit</button>
 			<div data-note-form-directive
 				data-save="saveNote(note)"
 				data-button-text="'Save Changes'"
 				data-label-text="'Edit Your Note'"
 				data-ng-if="note.editing"
-				data-note="note"></div>
-				<button type="button" data-ng-click="note.editing = false; $rollbackViewValue()">Cancel</button>
+				data-note="note">
+				<button type="button" data-ng-click="toggleEdit(note)">Cancel</button>
+			</div>
 			</form>
 		</li>
 	</ul>
