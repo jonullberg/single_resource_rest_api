@@ -38,6 +38,6 @@ notesApp.config(['$routeProvider', function($routeProvider) {
 			redirectTo: '/notes'
 		})
 		.otherwise({
-			redirectTo: '/create_user'
+			redirectTo: '/sign_in'
 		});
 }]);
