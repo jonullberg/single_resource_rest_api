@@ -4,7 +4,7 @@ require('../../app/js/client');
 require('angular-mocks');
 
 describe('Notes controller', function() {
-	var $CC;
+	var $ControllerConstructor;
 	var $httpBackend;
 	var $scope;
 
@@ -12,11 +12,11 @@ describe('Notes controller', function() {
 
 	beforeEach(angular.mock.inject(function($rootScope, $controller) {
 		$scope = $rootScope.$new();
-		$CC = $controller;
+		$ControllerConstructor = $controller;
 	}));
 
 	it('Should be able to create a new controller', function() {
-		var notesController = $CC('notesController', {$scope: $scope});
+		var notesController = $ControllerConstructor('notesController', {$scope: $scope});
 		expect(typeof notesController).toBe('object');
 		expect(Array.isArray($scope.notes)).toBe(true);
 		expect(Array.isArray($scope.errors)).toBe(true);
@@ -26,7 +26,7 @@ describe('Notes controller', function() {
 	describe('REST functionality', function() {
 		beforeEach(angular.mock.inject(function(_$httpBackend_) {
 			$httpBackend = _$httpBackend_;
-			this.notesController = $CC('notesController', {$scope: $scope});
+			this.notesController = $ControllerConstructor('notesController', {$scope: $scope});
 		}));
 
 		afterEach(function() {

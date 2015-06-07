@@ -26,7 +26,8 @@ module.exports = function(router, passport) {
 					res.status(500).json({ msg: 'Could not create user' });
 				}
 
-				res.json({ token: token });
+				res.set({ token: token });
+				res.end();
 			});
 		});
 	});
@@ -38,7 +39,8 @@ module.exports = function(router, passport) {
 				return res.status(500).json({ msg: 'Could not sign-in' });
 			}
 
-			res.json({ token: token });
+			res.set({ token: token });
+			res.end();
 		});
 	});
 };

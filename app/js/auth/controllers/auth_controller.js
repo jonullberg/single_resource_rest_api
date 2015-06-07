@@ -15,6 +15,11 @@ module.exports = function(app) {
 
 					$location.path('/notes');
 				});
+			} else if (user.password_confirmation && user.password !== user.password_confirmation) {
+				user.email = '';
+				user.password = '';
+				user.password_confirmation = '';
+				return $scope.errors.push({ msg: 'Your password and confirmation did not match' });
 			} else {
 				auth.signIn(user, function(err) {
 					if(err) {

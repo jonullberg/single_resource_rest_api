@@ -21,7 +21,7 @@ describe('notes API', function() {
 			.post('/api/create_user')
 			.send({ username: 'testUser', email: 'test@example.com', password: 'test123' })
 			.end(function(err, res) {
-				myToken = res.body.token;
+				myToken = res.header.token;
 				done();
 			});
 	});
