@@ -14,7 +14,7 @@ module.exports = function(app) {
 
 				$scope.signOut = function() {
 					auth.logout();
-					$location.path('/create_user');
+					$location.path('/sign_in');
 				};
 			}]
 		};

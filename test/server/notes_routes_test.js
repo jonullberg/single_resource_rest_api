@@ -21,7 +21,8 @@ describe('notes API', function() {
 			.post('/api/create_user')
 			.send({ username: 'testUser', email: 'test@example.com', password: 'test123' })
 			.end(function(err, res) {
-				myToken = res.header.token;
+				console.log(res.body);
+				myToken = res.body.eat;
 				done();
 			});
 	});
@@ -91,6 +92,7 @@ describe('notes API', function() {
 				.del('/api/notes/' + testNoteId)
 				.set({ eat: myToken })
 				.end(function(err, res) {
+					// console.log(res);
 					expect(err).to.equal(null);
 					expect(res.body.msg).to.equal('success');
 					done();

@@ -9,7 +9,7 @@ module.exports = function(app) {
 					headers: {'Authorization': 'Basic ' + encoded}
 				})
 				.success(function(data) {
-					$cookies.put('eat', data.token);
+					$cookies.put('eat', data.eat);
 					callback(null);
 				})
 				.error(function(data) {
@@ -20,7 +20,7 @@ module.exports = function(app) {
 			create: function(user, callback) {
 				$http.post('/api/create_user', user)
 					.success(function(data) {
-						$cookies.put('eat', data.token);
+						$cookies.put('eat', data.eat);
 						callback(null);
 					})
 					.error(function(data) {

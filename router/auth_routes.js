@@ -10,7 +10,6 @@ module.exports = function(router, passport) {
 		var newUserData = JSON.parse(JSON.stringify(req.body));
 		delete newUserData.email;
 		delete newUserData.password;
-
 		var newUser = new User(newUserData);
 		newUser.basic.email = req.body.email;
 		newUser.basic.password = newUser.generateHash(req.body.password);
@@ -25,9 +24,7 @@ module.exports = function(router, passport) {
 					console.log(err);
 					res.status(500).json({ msg: 'Could not create user' });
 				}
-
-				res.set({ token: token });
-				res.end();
+				res.json({ eat: token });
 			});
 		});
 	});
@@ -39,8 +36,7 @@ module.exports = function(router, passport) {
 				return res.status(500).json({ msg: 'Could not sign-in' });
 			}
 
-			res.set({ token: token });
-			res.end();
+			res.json({ eat: token });
 		});
 	});
 };

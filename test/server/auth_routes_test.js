@@ -26,9 +26,8 @@ describe('The login API', function() {
 				.post('/api/create_user')
 				.send({ username: 'firstTestUser', email: 'test@example.com', password: 'foobar123' })
 				.end(function(err, res) {
-					console.log(res);
 					expect(err).to.equal(null);
-					expect(res.headers).to.have.property('token');
+					expect(res.body).to.have.property('eat');
 					done();
 				});
 		});
@@ -40,7 +39,7 @@ describe('The login API', function() {
 				.end(function(err, res) {
 					// console.log(res);
 					expect(err).to.equal(null);
-					expect(res.headers).to.have.property('token');
+					expect(res.body).to.have.property('eat');
 					done();
 				});
 		});
