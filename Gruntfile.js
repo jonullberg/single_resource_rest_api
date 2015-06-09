@@ -66,10 +66,10 @@ module.exports = function(grunt) {
 				src: ['Gruntfile.js', 'server.js', 'models/*.js', 'routes/*.js']
 			},
 			client: {
-				src: ['app/**/*.js'],
+				src: ['app/js/**/*.js'],
 				options: {
 					globals: {
-						angular: true
+						react: true
 					}
 				}
 			},

@@ -1,37 +1,11 @@
 'use strict';
 
 var React = require('react');
-var NoteList = require('./components/notes_list.jsx');
-var request = require('superagent');
+var SingleResource = require('./components/single_resource.jsx');
+var RESOURCE_CNST = require('./components/resource_constants');
+var ACTION_CNST = rquire('./components/action_constants');
 
-var App = React.createClass({
+var Dispatch = require('./dispatcher/dispatcher');
+var dispatch = Dispatch(RESOURCE_CNST, ACTION_CNST);
 
-	getInitialState: function() {
-		return {
-			notes: [],
-			title: "Notes:"
-		};
-	},
-
-	componentDidMount: function() {
-		request
-			.get('/api/notes')
-			.end(function(err, res) {
-				if(err) console.log(err);
-
-				this.setState({notes: res.body});
-			}.bind(this));
-	},
-
-	render: function() {
-		return (
-			<main>
-				<h1>{this.state.title}</h1>
-				<NoteList data={this.state.notes} />
-			</main>
-		)
-	}
-
-});
-
-React.render(<App />, document.body);
+React.render(<SingleResource title="Notes:" resourceUrl="/api/notes" dispatch={dispatch} />, document.body);
