@@ -4,16 +4,23 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	grunt.initConfig({
 		webpack: {
 			client: {
-				entry: __dirname + '/app/js/client.js',
+				entry: __dirname + '/app/js/client.jsx',
 				output: {
 					path: 'build/',
 					file: 'bundle.js'
+				},
+				module: {
+					loaders: [
+						{
+							test: /\.jsx$/,
+							loader: 'jsx-loader'
+						}
+					]
 				}
 			},
 			test: {
@@ -22,19 +29,6 @@ module.exports = function(grunt) {
 					path: 'test/client/',
 					file: 'bundle.js'
 				}
-			},
-			karma: {
-				entry: __dirname + '/test/karma_tests/test_entry.js',
-				output: {
-					path: 'test/karma_tests/',
-					file: 'bundle.js'
-				}
-			}
-		},
-
-		karma: {
-			test: {
-				configFile: './karma.conf.js'
 			}
 		},
 
@@ -55,21 +49,6 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			jasmine: {
-				src: ['test/karma_tests/*test.js'],
-				options: {
-					globals: {
-						angular: true,
-						describe: true,
-						it: true, 
-						before: true,
-						beforeEach: true,
-						after: true,
-						afterEach: true,
-						expect: true
-					}
-				}
-			},
 			mocha: {
 				src: ['test/server/*test.js'],
 				options: {

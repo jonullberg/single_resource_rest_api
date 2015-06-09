@@ -2,13 +2,12 @@
 
 var Note = require('../models/Note');	// pulls in the Quote schema
 var bodyparser = require('body-parser'); // requires in the bodyparser module
-var eatAuth = require('../lib/eat_auth')(process.env.APP_SECRET);
 
 module.exports = function(router) {
 	router.use(bodyparser.json());
 
-	router.get('/notes', eatAuth, function(req, res) {
-		Note.find({authorId: req.user._id}, function(err, data) {
+	router.get('/notes', function(req, res) {
+		Note.find({}, function(err, data) {
 			if(err) {
 				console.log(err);
 				res.status(500).json({ msg: 'Internal Server Error' });
@@ -18,9 +17,8 @@ module.exports = function(router) {
 		});
 	});
 
-	router.post('/notes', eatAuth, function(req, res) {
+	router.post('/notes', function(req, res) {
 		var newNote = new Note(req.body);
-		newNote.authorId = req.user._id;
 		newNote.save(function(err, data) {
 			if(err){
 				console.log(err);
@@ -31,7 +29,7 @@ module.exports = function(router) {
 		});
 	});
 
-	router.put('/notes/:id', eatAuth, function(req, res) {
+	router.put('/notes/:id', function(req, res) {
 		var updatedNote = req.body;
 		delete updatedNote._id;
 
@@ -44,7 +42,7 @@ module.exports = function(router) {
 		});
 	});
 
-	router.delete('/notes/:id', eatAuth, function(req, res) {
+	router.delete('/notes/:id', function(req, res) {
 		Note.remove({'_id': req.params.id}, function(err, data) {
 			if (err) {
 				console.log(err);
